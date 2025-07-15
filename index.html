@@ -4,8 +4,19 @@
   <meta charset="UTF-8">
   <title>Phân tích Khoảng Số</title>
   <style>
-    body { font-family: Arial, sans-serif; max-width: 600px; margin: 30px auto; }
-    textarea, button { width: 100%; padding: 10px; font-size: 16px; margin-top: 10px; }
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 30px auto;
+    }
+
+    textarea, button {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
     #output {
       margin-top: 20px;
       white-space: pre-line;
@@ -14,7 +25,10 @@
       border-radius: 5px;
       border: 1px solid #ccc;
       min-height: 100px;
+      max-height: 300px;      /* Giới hạn chiều cao */
+      overflow-y: auto;       /* Hiển thị thanh cuộn dọc */
     }
+
     .btn-copy {
       background-color: #4CAF50;
       color: white;
@@ -22,6 +36,7 @@
       cursor: pointer;
       margin-top: 10px;
     }
+
     .btn-copy:hover {
       background-color: #45a049;
     }
@@ -59,17 +74,20 @@
 
       // Tạo khoảng
       const result = [];
-      for (let i = 0; i < numbers.length; i++) {
-        const current = numbers[i];
-        if (i === numbers.length - 1) {
-          result.push(formatNumber(current));
-          break;
-        }
-        const next = numbers[i + 1];
-        if (current + 1 === next) {
-          result.push(formatNumber(current));
+      let start = numbers[0];
+      let end = numbers[0];
+
+      for (let i = 1; i <= numbers.length; i++) {
+        if (numbers[i] === end + 1) {
+          end = numbers[i];
         } else {
-          result.push(`${formatNumber(current)}-${formatNumber(next - 1)}`);
+          if (start === end) {
+            result.push(formatNumber(start));
+          } else {
+            result.push(`${formatNumber(start)}-${formatNumber(end)}`);
+          }
+          start = numbers[i];
+          end = numbers[i];
         }
       }
 
