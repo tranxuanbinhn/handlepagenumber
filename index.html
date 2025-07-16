@@ -70,22 +70,18 @@
         }
       }
 
-      // Tạo khoảng
-      const result = [];
-      let start = numbers[0];
-      let end = numbers[0];
-
-      for (let i = 1; i <= numbers.length; i++) {
-        if (numbers[i] === end + 1) {
-          end = numbers[i];
+    const result = [];
+      for (let i = 0; i < numbers.length; i++) {
+        const current = numbers[i];
+        if (i === numbers.length - 1) {
+          result.push(formatNumber(current));
+          break;
+        }
+        const next = numbers[i + 1];
+        if (current + 1 === next) {
+          result.push(formatNumber(current));
         } else {
-          if (start === end) {
-            result.push(formatNumber(start));
-          } else {
-            result.push(`${formatNumber(start)}-${formatNumber(end)}`);
-          }
-          start = numbers[i];
-          end = numbers[i];
+          result.push(`${formatNumber(current)}-${formatNumber(next - 1)}`);
         }
       }
 
